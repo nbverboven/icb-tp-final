@@ -3,15 +3,18 @@
 import sys
 from math import sqrt
 
-f= open(sys.argv[1],'r')
-lista=[]
-for t in f.readlines():
-	t=t.rstrip('\n')
-	t=t.split()
-	for i in range(len(t)):
-		t[i]=float(t[i])
-	lista.append(tuple(t))
-f.close()
+archi=sys.argv[1]
+def listaDePuntos (archi)
+	f= open(archi,'r')
+	lista=[]
+	for t in f.readlines():
+		t=t.rstrip('\n')
+		t=t.split()
+		for i in range(len(t)):
+			t[i]=float(t[i])
+		lista.append(tuple(t))
+	f.close()
+	return lista
 
 print(lista)
 
