@@ -1,7 +1,7 @@
 import sys
 from math import sqrt
 
-# archi = sys.argv[1]
+archi = sys.argv[1]
 
 def listaDePuntos(archi):
 	f = open(archi,'r')
@@ -22,7 +22,7 @@ def distancia(punto1, punto2):
 
 def listaDeDist(a):
 	if len(a) == 1:
-		return []
+		return [0.0]
 	else:	
 		l = []
 		i = 1
@@ -43,7 +43,7 @@ def distanciaMinima(a):
 		else:
 			return mini
 
-# print(distanciaMinima(listaDeDist(lista)))
+print(distanciaMinima(listaDeDist(listaDePuntos(archi))))
 
 def upSort(a):
 	actual = len(a) - 1
