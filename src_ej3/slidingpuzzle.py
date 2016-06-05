@@ -41,8 +41,8 @@ class Rompecabezas(object):
 		for fila in archivo.readlines():
 			# lista_aux = fila
 			lista_aux = []
-			fila.rstrip('\n')
-			fila.split('\t')
+			fila = fila.rstrip('\n')
+			fila = fila.split('\t')
 			for i in fila:
 				lista_aux.append(i)
 			self._rompecabezas.append(lista_aux)
