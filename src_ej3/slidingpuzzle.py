@@ -92,22 +92,22 @@ class Rompecabezas(object):
 		# Verifico que sea posible mover el espacio vacío en la dirección especificada previo a realizar
 		# el intercambio.
 		if direccion == 0 and pos[0]-1 >= 0:
-			_rompecabezas[pos[0]][pos[1]], _rompecabezas[pos[0]-1][pos[1]] = _rompecabezas[pos[0]-1][pos[1]], ' '
+			self._rompecabezas[pos[0]][pos[1]], self._rompecabezas[pos[0]-1][pos[1]] = self._rompecabezas[pos[0]-1][pos[1]], ' '
 			self._espacio_vacio = (pos[0]-1, pos[1])
 			intercambio_realizado = True
 
 		elif direccion == 1 and pos[1]-1 >= 0:
-			_rompecabezas[pos[0]][pos[1]], _rompecabezas[pos[0]][pos[1]-1] = _rompecabezas[pos[0]][pos[1]-1], ' '
+			self._rompecabezas[pos[0]][pos[1]], self._rompecabezas[pos[0]][pos[1]-1] = self._rompecabezas[pos[0]][pos[1]-1], ' '
 			self._espacio_vacio = (pos[0], pos[1]-1)
 			intercambio_realizado = True
 
 		elif direccion == 2 and pos[0]+1 <= self._alto:
-			_rompecabezas[pos[0]][pos[1]], _rompecabezas[pos[0]+1][pos[1]] = _rompecabezas[pos[0]+1][pos[1]], ' '
+			self._rompecabezas[pos[0]][pos[1]], self._rompecabezas[pos[0]+1][pos[1]] = self._rompecabezas[pos[0]+1][pos[1]], ' '
 			self._espacio_vacio = (pos[0]+1, pos[1])
 			intercambio_realizado = True
 
 		elif direccion == 3 and pos[1]+1 <= self._ancho:
-			_rompecabezas[pos[0]][pos[1]], _rompecabezas[pos[0]][pos[1]+1] = _rompecabezas[pos[0]][pos[1]+1], ' '
+			self._rompecabezas[pos[0]][pos[1]], self._rompecabezas[pos[0]][pos[1]+1] = self._rompecabezas[pos[0]][pos[1]+1], ' '
 			self._espacio_vacio = (pos[0], pos[1]+1)
 			intercambio_realizado = True
 
@@ -127,12 +127,4 @@ class Rompecabezas(object):
 
 if __name__ == '__main__':
 	# acá pueden completar con algunas pruebas para usar con el intérprete interactivo
-	# x = Rompecabezas(4, 4)
-	# x.cargar('puzzle4.txt')
-	# print(x._rompecabezas)
-	# x.guardar('puzzle4_pruebita.txt')
-	# print(x.resuelto())
-	# y = Rompecabezas(6, 2)
-	# y.cargar('puzzle3.txt')
-	# print(y._rompecabezas)
-	# print(y.resuelto())
+	pass
