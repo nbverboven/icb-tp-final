@@ -16,7 +16,7 @@ class Rompecabezas(object):
 		self._rompecabezas = []
 		self._ancho = width
 		self._alto = height
-		self._espacio_vacio = (0, 0)
+		self._espacio_vacio = (0, 0) # (alto, ancho) == (filas, columnas)
 
 	def update(self):
 		if self.parent is not None:
@@ -87,7 +87,31 @@ class Rompecabezas(object):
 
 
 	def mover(self, direccion):
-		pass
+		intercambio_realizado = False
+		pos = self._espacio_vacio
+		# Verifico que sea posible mover el espacio vacío en la dirección especificada previo a realizar
+		# el intercambio.
+		if direccion == 0 and pos[0]-1 >= 0:
+			_rompecabezas[pos[0]][pos[1]], _rompecabezas[pos[0]-1][pos[1]] = _rompecabezas[pos[0]-1][pos[1]], ' '
+			self._espacio_vacio = (pos[0]-1, pos[1])
+			intercambio_realizado = True
+
+		elif direccion == 1 and pos[1]-1 >= 0:
+			_rompecabezas[pos[0]][pos[1]], _rompecabezas[pos[0]][pos[1]-1] = _rompecabezas[pos[0]][pos[1]-1], ' '
+			self._espacio_vacio = (pos[0], pos[1]-1)
+			intercambio_realizado = True
+
+		elif direccion == 2 and pos[0]+1 <= self._alto:
+			_rompecabezas[pos[0]][pos[1]], _rompecabezas[pos[0]+1][pos[1]] = _rompecabezas[pos[0]+1][pos[1]], ' '
+			self._espacio_vacio = (pos[0]+1, pos[1])
+			intercambio_realizado = True
+
+		elif direccion == 3 and pos[1]+1 <= self._ancho:
+			_rompecabezas[pos[0]][pos[1]], _rompecabezas[pos[0]][pos[1]+1] = _rompecabezas[pos[0]][pos[1]+1], ' '
+			self._espacio_vacio = (pos[0], pos[1]+1)
+			intercambio_realizado = True
+
+		return intercambio_realizado		
 
 	def guardar(self, fn):
 		archivo = open(fn, 'w')
