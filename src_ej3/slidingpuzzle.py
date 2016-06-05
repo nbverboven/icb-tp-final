@@ -16,6 +16,7 @@ class Rompecabezas(object):
 		self._rompecabezas = []
 		self._ancho = width
 		self._alto = height
+		self._espacio_vacio = (0, 0)
 
 	def update(self):
 		if self.parent is not None:
@@ -38,18 +39,22 @@ class Rompecabezas(object):
 		# else:
 		self._rompecabezas = []
 		archivo = open(fn, 'r')
+		numero_fila = 0
 		for fila in archivo.readlines():
 			# lista_aux = fila
 			lista_aux = []
 			fila = fila.rstrip('\n')
 			fila = fila.split('\t')
-			for i in fila:
-				lista_aux.append(i)
+			for columna in range(len(fila)):
+				if fila[columna] == ' ':
+					self._espacio_vacio = (numero_fila, columna)
+				lista_aux.append(fila[columna])
 			self._rompecabezas.append(lista_aux)
+			numero_fila += 1
 		archivo.close()
 
 	def get(self, i, j):
-		return str(self._rompecabezas[i][j])
+		return self._rompecabezas[i][j]
 
 	def ancho(self):
 		return self._ancho
@@ -62,11 +67,13 @@ class Rompecabezas(object):
 		# Ver si se puede hacer más eficiente.
 		# Primero hacer que ande. jaja
 
-		# lista_aux = []
-		# flag = True
-		# for fila in self._rompecabezas:
-		# 	for columna in fila:
-		# 		lista_aux.append(columna)
+		lista_aux = []
+		flag = True
+		for fila in self._rompecabezas:
+			for columna in fila:
+				lista_aux.append(columna)
+		# Hasta acá hace lo que debería.
+
 		# print(lista_aux)
 		# if lista_aux[0] == ' ':
 		# 	flag = False
@@ -96,12 +103,12 @@ class Rompecabezas(object):
 
 if __name__ == '__main__':
 	# acá pueden completar con algunas pruebas para usar con el intérprete interactivo
-	x = Rompecabezas(4, 4)
-	x.cargar('puzzle4.txt')
-	print(x._rompecabezas)
-	x.guardar('puzzle4_pruebita.txt')
-	print(x.resuelto())
-	y = Rompecabezas(6, 2)
-	y.cargar('puzzle3.txt')
-	print(y._rompecabezas)
-	print(y.resuelto())
+	# x = Rompecabezas(4, 4)
+	# x.cargar('puzzle4.txt')
+	# print(x._rompecabezas)
+	# x.guardar('puzzle4_pruebita.txt')
+	# print(x.resuelto())
+	# y = Rompecabezas(6, 2)
+	# y.cargar('puzzle3.txt')
+	# print(y._rompecabezas)
+	# print(y.resuelto())
