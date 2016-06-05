@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
+import sys
 
 UP, LEFT, DOWN, RIGHT = 0, 1, 2, 3
 
@@ -12,9 +13,9 @@ class Rompecabezas(object):
 		#
 		######################################
 
-		_rompecabezas = []
-		_ancho = 0
-		_alto = 0
+		self._rompecabezas = []
+		self._ancho = width
+		self._alto = height
 
 	def update(self):
 		if self.parent is not None:
@@ -28,38 +29,40 @@ class Rompecabezas(object):
 	def cargar(self, fn):
 		# TODO: Ver cómo levantar una excepción si el 
 		#formato del archivo no es correcto.
-		lista_aux = []
-		try:
-			archivo = open(fn, 'r')
-		except IOError:
-			print("No se pudo abrir el archivo")
-		else:
-			archivo = open(fn, 'r')
-			for fila in archivo.readlines():
-				fila.rstrp('\n')
-				fila.split('\t')
-				for i in fila:
-					lista_aux.append(i)
-				_rompecabezas.append(fila)
-			_ancho = len(_rompecabezas)
-			_alto = len(_rompecabezas[0])
-			archivo.close()
+		
+		# try:
+		# 	archivo = open(fn, 'r')
+		# 	self._ancho == self._alto
+		# except IOError:
+		# 	print("No se pudo abrir el archivo")
+		# else:
+		self._rompecabezas = []
+		archivo = open(fn, 'r')
+		for fila in archivo.readlines():
+			# lista_aux = fila
+			lista_aux = []
+			fila.rstrip('\n')
+			fila.split('\t')
+			for i in fila:
+				lista_aux.append(i)
+			self._rompecabezas.append(lista_aux)
+		archivo.close()
 
 	def get(self, i, j):
-		return str(_rompecabezas[i][j])
+		return str(self._rompecabezas[i][j])
 
 	def ancho(self):
-		return _ancho
+		return self._ancho
 
 	def alto(self):
-		return _alto
+		return self._alto
 
 	def resuelto(self):
 		# TODO: Así como está hace n²+n operaciones.
 		# Ver si se puede hacer más eficiente.
 		lista_aux = []
 		flag = True
-		for fila in _rompecabezas:
+		for fila in self._rompecabezas:
 			for columna in fila:
 				lista_aux.append(columna)
 		if lista_aux[0] == ' ':
@@ -75,7 +78,10 @@ class Rompecabezas(object):
 		pass
 
 	def guardar(self, fn):
-		pass
+		archivo = open(fn, 'w')
+		for fila in range(len(self._rompecabezas)):
+			archivo.write('	'.join(self._rompecabezas[fila]) + '\n')
+		archivo.close()
 
 	def resolver(self, n):
 		if self.resuelto():
@@ -85,4 +91,7 @@ class Rompecabezas(object):
 
 if __name__ == '__main__':
 	# acá pueden completar con algunas pruebas para usar con el intérprete interactivo
-	pass
+	x = Rompecabezas(4, 4)
+	x.cargar('puzzle4.txt')
+	print(x._rompecabezas)
+	x.guardar('puzzle4_pruebita.txt')
