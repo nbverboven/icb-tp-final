@@ -60,19 +60,24 @@ class Rompecabezas(object):
 	def resuelto(self):
 		# TODO: Así como está hace n²+n operaciones.
 		# Ver si se puede hacer más eficiente.
-		lista_aux = []
-		flag = True
-		for fila in self._rompecabezas:
-			for columna in fila:
-				lista_aux.append(columna)
-		if lista_aux[0] == ' ':
-			flag = False
-		i = 0
-		while i < len(lista_aux)-1 and flag:
-			if lista_aux[i] > lista_aux[i+1]:
-				flag = False 
-			i+= 1
-		return flag
+		# Primero hacer que ande. jaja
+
+		# lista_aux = []
+		# flag = True
+		# for fila in self._rompecabezas:
+		# 	for columna in fila:
+		# 		lista_aux.append(columna)
+		# print(lista_aux)
+		# if lista_aux[0] == ' ':
+		# 	flag = False
+		# i = 1
+		# while i < len(lista_aux)-1 and flag:
+		# 	if lista_aux[i] < lista_aux[i-1]:
+		# 		flag = False 
+		# 	i+= 1
+		# return flag and lista_aux[-1] == ' '
+
+
 
 	def mover(self, direccion):
 		pass
@@ -95,3 +100,8 @@ if __name__ == '__main__':
 	x.cargar('puzzle4.txt')
 	print(x._rompecabezas)
 	x.guardar('puzzle4_pruebita.txt')
+	print(x.resuelto())
+	y = Rompecabezas(6, 2)
+	y.cargar('puzzle3.txt')
+	print(y._rompecabezas)
+	print(y.resuelto())
