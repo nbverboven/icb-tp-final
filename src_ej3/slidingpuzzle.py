@@ -31,25 +31,20 @@ class Rompecabezas(object):
 		# TODO: Ver cómo levantar una excepción si el 
 		#formato del archivo no es correcto.
 		
-		# try:
-		# 	archivo = open(fn, 'r')
-		# 	self._ancho == self._alto
-		# except IOError:
-		# 	print("No se pudo abrir el archivo")
-		# else:
 		self._rompecabezas = []
-		archivo = open(fn, 'r')
+		try:
+			archivo = open(fn, 'r')
+		except IOError:
+			# print("No se pudo abrir el archivo")
+			raise
 		numero_fila = 0
 		for fila in archivo.readlines():
-			# lista_aux = fila
-			lista_aux = []
 			fila = fila.rstrip('\n')
 			fila = fila.split('\t')
 			for columna in range(len(fila)):
 				if fila[columna] == ' ':
 					self._espacio_vacio = (numero_fila, columna)
-				lista_aux.append(fila[columna])
-			self._rompecabezas.append(lista_aux)
+			self._rompecabezas.append(fila)
 			numero_fila += 1
 		archivo.close()
 
@@ -71,18 +66,19 @@ class Rompecabezas(object):
 		flag = True
 		for fila in self._rompecabezas:
 			for columna in fila:
-				lista_aux.append(columna)
+				if columna == ' ':
+					lista_aux.append(self._ancho*self._alto)
+				else:
+					lista_aux.append(int(columna))
 		# Hasta acá hace lo que debería.
 
-		# print(lista_aux)
-		# if lista_aux[0] == ' ':
-		# 	flag = False
-		# i = 1
-		# while i < len(lista_aux)-1 and flag:
-		# 	if lista_aux[i] < lista_aux[i-1]:
-		# 		flag = False 
-		# 	i+= 1
-		# return flag and lista_aux[-1] == ' '
+		print(lista_aux)
+		i = 0
+		while i < len(lista_aux)-1 and flag:
+			if lista_aux[i] > lista_aux[i+1]:
+				flag = False 
+			i+= 1
+		return flag
 
 
 
@@ -127,4 +123,7 @@ class Rompecabezas(object):
 
 if __name__ == '__main__':
 	# acá pueden completar con algunas pruebas para usar con el intérprete interactivo
-	pass
+	x = Rompecabezas(4, 4)
+	x.cargar('puzzle4.txt')
+	print(x._rompecabezas)
+	print(x.resuelto())
