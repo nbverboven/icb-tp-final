@@ -46,7 +46,10 @@ class Arbol(object):
 			return self.r == otro_arbol.raiz() and self._izquierda.__eq__(otro_arbol.izquierda()) and self._derecha.__eq__(otro_arbol.derecha())
 
 	def find(self, a):
-		return (not self._vacio) and (self.r == a or (self._izquierda.find(a)) or (self._derecha.find(a)))
+		if self._vacio:
+			return False
+		else:
+			return self.r == a or self._izquierda.find(a) or self._derecha.find(a)
 
 	def espejo(self):
 		if self._vacio:
