@@ -48,6 +48,12 @@ class Arbol(object):
 	def find(self, a):
 		return (not self._vacio) and (self.r == a or (self._izquierda.find(a)) or (self._derecha.find(a)))
 
+	def espejo(self):
+		if self._vacio:
+			return Arbol()
+		else:
+			return Arbol(self.r, self._derecha.espejo(), self._izquierda.espejo())
+
 	def preorder(self):
 		if self._vacio:
 			return []
