@@ -26,7 +26,7 @@ class Arbol(object):
             raise AttributeError("El árbol está vacío")
 
     def izquierda(self):
-        if self._iquierda is not None:
+        if self._izquierda is not None:
             return self._izquierda
         else:
             raise AttributeError("El árbol no tiene rama izquierda")
@@ -47,3 +47,9 @@ class Arbol(object):
 
     def find(self, a):
         return (not self._vacio) and (self.r == a or (self._izquierda.find(a)) or (self._derecha.find(a)))
+
+    def inorder(self):
+        if self._vacio:
+            return []
+        else:
+            return self._izquierda.inorder() + [self.r] + self._derecha.inorder()
