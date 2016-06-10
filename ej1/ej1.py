@@ -1,6 +1,7 @@
 import sys
 from math import sqrt
 
+
 archi = sys.argv[1]
 
 def listaDePuntos(archi):
@@ -93,6 +94,22 @@ def bubbleSort(lista):
 
 # print(maxx(lista))
 # print(upSort(lista))
+
+
+def quicksort(a):
+	if len(a)==0:
+		return []
+	else:
+		j=0
+		i=0
+		while i<len(a):
+			if a[0]>a[i]:
+				j+=1
+				a[j],a[i]=a[i],a[j]
+			i+=1
+		a[0],a[j]=a[j],a[0]
+		return quicksort(a[:j])+[a[j]]+quicksort(a[j+1:])
+
 
 
 
