@@ -1,9 +1,6 @@
 import sys
 from math import sqrt
 
-
-archi = sys.argv[1]
-
 def listaDePuntos(archi):
 	f = open(archi,'r')
 	lista = []
@@ -45,7 +42,6 @@ def distanciaMinima(a):
 		else:
 			return mini
 
-print(distanciaMinima(listaDeDist(listaDePuntos(archi))))
 
 def upSort(a):
 	actual = len(a) - 1
@@ -95,6 +91,35 @@ def bubbleSort(lista):
 # print(maxx(lista))
 # print(upSort(lista))
 
+#def mergesort(a):
+
+def partir(a):
+	mitad = len(a)//2
+	return a[:mitad], a[mitad:]
+
+def combinar(l1, l2):
+	l=[]
+	i=0
+	while i<len(l1):
+		if l1[0]<l2[0]:
+			l.append(l1[0])
+		l.append(l2[0])
+		i+=1
+
+
+
+def mergesort(a):
+	if len(a)<=1: 
+		return a
+	elif len(a)==2:
+		if a[0]>a[1]: 
+			a[0],a[1]=a[0],a[1]
+		return a
+	else:
+		l1, l2 = partir(a)
+		mergesort(l1)
+		mergesort(l2)
+		return combinar(l1, l2)
 
 def quicksort(a):
 	if len(a)==0:
@@ -113,5 +138,8 @@ def quicksort(a):
 
 
 
+if __name__ == '__main__':
+	archi = sys.argv[1]
+	print(distanciaMinima(listaDeDist(listaDePuntos(archi))))
 
 
