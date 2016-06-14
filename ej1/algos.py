@@ -19,6 +19,7 @@ def maxPos(lista, desde, hasta):
 			posicion_del_maximo = i
 	return posicion_del_maximo
 
+
 #bubble:
 
 def bubbleSort(lista):
@@ -32,6 +33,7 @@ def bubbleSort(lista):
 				intercambiado = True
 		n -= 1
 	return lista
+
 
 #merge:
 
@@ -52,8 +54,7 @@ def partir(a):
 	mitad = len(a)//2
 	return a[:mitad], a[mitad:]
 
-#combinar resive listas ya ordenadas
-
+#combinar recibe listas ya ordenadas
 def combinar(l1, l2):
 	l = []
 	i = 0
@@ -69,8 +70,6 @@ def combinar(l1, l2):
 		return l + l1[i:]
 	else:
 		return l + l2[j:]	
-
-
 
 
 #quick:
