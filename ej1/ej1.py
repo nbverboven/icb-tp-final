@@ -97,14 +97,23 @@ def partir(a):
 	mitad = len(a)//2
 	return a[:mitad], a[mitad:]
 
+#combinar resive listas ya ordenadas
+
 def combinar(l1, l2):
 	l=[]
 	i=0
-	while i<len(l1):
-		if l1[0]<l2[0]:
-			l.append(l1[0])
-		l.append(l2[0])
-		i+=1
+	j=0
+	while i<len(l1) and j<len(l2):
+		if l1[i]<l2[j]:
+			l.append(l1[i])
+			i+=1
+		else:
+			l.append(l2[j])
+			j+=1
+	if i<len(l1):
+		return l+l1[i:]
+	else:
+		return l+l2[j:]	
 
 
 
@@ -113,13 +122,13 @@ def mergesort(a):
 		return a
 	elif len(a)==2:
 		if a[0]>a[1]: 
-			a[0],a[1]=a[0],a[1]
+			a[0],a[1]=a[1],a[0]
 		return a
 	else:
 		l1, l2 = partir(a)
-		mergesort(l1)
-		mergesort(l2)
-		return combinar(l1, l2)
+		m1=mergesort(l1)
+		m2=mergesort(l2)
+		return combinar(m1, m2)
 
 def quicksort(a):
 	if len(a)==0:
