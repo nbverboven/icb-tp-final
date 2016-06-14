@@ -1,7 +1,6 @@
 import sys
 from math import sqrt
-
-archi = sys.argv[1]
+import algos.py
 
 def listaDePuntos(archi):
 	f = open(archi,'r')
@@ -15,14 +14,14 @@ def listaDePuntos(archi):
 	f.close()
 	return lista
 
-# print(lista)
+#print(listaDePuntos(archi))
 
 def distancia(punto1, punto2):
 	return sqrt( ( abs(punto1[0]-punto2[0]) )**2 + ( abs(punto1[1]-punto2[1]) )**2 )
 
 def listaDeDist(a):
-	if len(a) == 1:
-		return [0.0]
+	if len(a) == 0:
+		return []
 	else:	
 		l = []
 		i = 1
@@ -34,7 +33,8 @@ def listaDeDist(a):
 # print(listaDeDist(lista))
 
 def distanciaMinima(a):
-	if len(a) == 1:
+	if len(a)==0: return None
+	elif len(a) == 1:
 		return a[0]
 	else:	
 		mini = distanciaMinima(a[1:])
@@ -43,7 +43,6 @@ def distanciaMinima(a):
 		else:
 			return mini
 
-print(distanciaMinima(listaDeDist(listaDePuntos(archi))))
 
 def upSort(a):
 	actual = len(a) - 1
@@ -59,7 +58,7 @@ def maxPos(lista, desde, hasta):
 	i = desde
 	while i < hasta:
 		i += 1
-		if lista[i] >= lista[posicion_del_maximo]:
+		if lista[i][0] >= lista[posicion_del_maximo][0]:
 			posicion_del_maximo = i
 	return posicion_del_maximo
 
@@ -77,23 +76,70 @@ def maxPos(lista, desde, hasta):
 # 		i += 1
 # 	return maxposi
 
-def bubbleSort(lista):
-	intercambiado = True
-	n = len(lista)-1
-	while n > 0 and intercambiado:
-		intercambiado = False
-		for j in range(n):
-			if lista[j] > lista[j+1]:
-				lista[j], lista[j+1] = lista[j+1], lista[j]
-				intercambiado = True
-		n -= 1
-	return lista
+
 
 
 # print(maxx(lista))
 # print(upSort(lista))
 
+#def mergesort(a):
+
+def partir(a):
+	mitad = len(a)//2
+	return a[:mitad], a[mitad:]
+
+#combinar resive listas ya ordenadas
+
+def combinar(l1, l2):
+	l=[]
+	i=0
+	j=0
+	while i<len(l1) and j<len(l2):
+		if l1[i][0]<l2[j][0]:
+			l.append(l1[i])
+			i+=1
+		else:
+			l.append(l2[j])
+			j+=1
+	if i<len(l1):
+		return l+l1[i:]
+	else:
+		return l+l2[j:]	
 
 
+
+def mergesort(a):
+	if len(a)<=1: 
+		return a
+	elif len(a)==2:
+		if a[0][0]>a[1][0]: 
+			a[0],a[1]=a[1],a[0]
+		return a
+	else:
+		l1, l2 = partir(a)
+		m1=mergesort(l1)
+		m2=mergesort(l2)
+		return combinar(m1, m2)
+
+def quicksort(a):
+	if len(a)==0:
+		return []
+	else:
+		j=0
+		i=0
+		while i<len(a):
+			if a[0][0]>a[i][0]:
+				j+=1
+				a[j],a[i]=a[i],a[j]
+			i+=1
+		a[0],a[j]=a[j],a[0]
+		return quicksort(a[:j])+[a[j]]+quicksort(a[j+1:])
+
+
+
+
+if __name__ == '__main__':
+	archi = sys.argv[1]
+	print(distanciaMinima(listaDeDist(listaDePuntos(archi))))
 
 
