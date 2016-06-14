@@ -1,6 +1,7 @@
 import sys
 from math import sqrt
-import algos.py
+import algos
+from random import randint
 
 def listaDePuntos(archi):
 	f = open(archi,'r')
@@ -33,7 +34,8 @@ def listaDeDist(a):
 # print(listaDeDist(lista))
 
 def distanciaMinima(a):
-	if len(a)==0: return None
+	if len(a) == 0: 
+		return None
 	elif len(a) == 1:
 		return a[0]
 	else:	
