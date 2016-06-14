@@ -20,22 +20,22 @@ class Arbol(object):
 		return self._vacio
 
 	def raiz(self):
-		try:
+		if not self._vacio:
 			return self.r
-		except AttributeError:
-			raise AttributeError("El árbol está vacío")
+		else:
+			raise AttributeError
 
 	def izquierda(self):
-		if self._izquierda is not None:
+		if not self._vacio and not self._izquierda._vacio:
 			return self._izquierda
 		else:
-			raise AttributeError("El árbol no tiene rama izquierda")
+			raise AttributeError
 
 	def derecha(self):
-		try:
+		if not self._vacio and not self._derecha._vacio:
 			return self._derecha
-		except AttributeError:
-			raise AttributeError("El árbol no tiene rama derecha")
+		else:
+			raise AttributeError
 
 	def __eq__(self, otro_arbol):
 		if self._vacio and otro_arbol.vacio():
