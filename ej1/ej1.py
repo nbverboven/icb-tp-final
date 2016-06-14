@@ -1,6 +1,6 @@
 import sys
 from math import sqrt
-import algos.py
+import algos
 
 def listaDePuntos(archi):
 	f = open(archi,'r')
@@ -14,7 +14,6 @@ def listaDePuntos(archi):
 	f.close()
 	return lista
 
-#print(listaDePuntos(archi))
 
 def distancia(punto1, punto2):
 	return sqrt( ( abs(punto1[0]-punto2[0]) )**2 + ( abs(punto1[1]-punto2[1]) )**2 )
@@ -30,116 +29,69 @@ def listaDeDist(a):
 			i += 1
 		return l + listaDeDist(a[1:])
 
-# print(listaDeDist(lista))
 
-def distanciaMinima(a):
+def minima(a):
 	if len(a)==0: return None
 	elif len(a) == 1:
 		return a[0]
 	else:	
-		mini = distanciaMinima(a[1:])
+		mini = minima(a[1:])
 		if a[0] <= mini:
 			return a[0]
 		else:
 			return mini
 
 
-def upSort(a):
-	actual = len(a) - 1
-	i = 0
-	while actual > 0:
-		i = maxPos(a, 0, actual)
-		a[i], a[actual] = a[actual], a[i]
-		actual -= 1
-	return a
+def distanciaMinima(a):
+	if len(a)<=1:
+		return None
+	else:
+		i=1
+		while i<len(a) and distancia(a[0], a[i])!= minima(listaDeDist(a)):
+			i+=1
+		if i<len(a):
+			return a[0], a[i]
+		else:
+			return distanciaMinima(a[1:])
 
-def maxPos(lista, desde, hasta):
-	posicion_del_maximo = desde
-	i = desde
-	while i < hasta:
-		i += 1
-		if lista[i][0] >= lista[posicion_del_maximo][0]:
-			posicion_del_maximo = i
-	return posicion_del_maximo
-
-# def maxpos(a,pos):
-# 	return maxx(a[:pos+1])
-
-# def maxx(a):
-# 	i = 0 
-# 	maxi = None 
-# 	maxposi = None
-# 	while i<len(a):
-# 		if not(maxi) or maxi[0]<a[i][0]:
-# 			maxposi = i
-# 			maxi = a[i]
-# 		i += 1
-# 	return maxposi
-
-
-
-
-# print(maxx(lista))
-# print(upSort(lista))
-
-#def mergesort(a):
+#div&conquer:
 
 def partir(a):
 	mitad = len(a)//2
 	return a[:mitad], a[mitad:]
 
-#combinar resive listas ya ordenadas
+def divide(a):
+	l1=listaDeDist(partir(a)[0])
+	l2=listaDeDist(partir(a)[1])
+	return l1, l2
+#lista de puntos
+def minimodeparticion(a):
+	l1, l2=divide(a)
+	if minima(l1) < minima(l2):
+		return minima(l1)
+	return minima(l2)
 
-def combinar(l1, l2):
-	l=[]
-	i=0
+#lista de puntos
+def conquer(a):
+	i=len(a)//2
+	x=((a[i][0] - a[i-1][0])/2)+a[i-1][0]
 	j=0
-	while i<len(l1) and j<len(l2):
-		if l1[i][0]<l2[j][0]:
-			l.append(l1[i])
-			i+=1
-		else:
-			l.append(l2[j])
-			j+=1
-	if i<len(l1):
-		return l+l1[i:]
-	else:
-		return l+l2[j:]	
+	l=[]
+	while j<len(a):
+		if abs(a[j][0]-x)< minimodeparticion(a):
+			l.append(a[j])
+		j+=1
+	if minimodeparticion(a)>=minima(listaDeDist(l)):
+		return distanciaMinima(l)
+	l1, l2=divide(a)
+	if minima(l1) < minima(l2):
+		return distanciaMinima(l1)
+	return distanciaMinima(l2)
 
-
-
-def mergesort(a):
-	if len(a)<=1: 
-		return a
-	elif len(a)==2:
-		if a[0][0]>a[1][0]: 
-			a[0],a[1]=a[1],a[0]
-		return a
-	else:
-		l1, l2 = partir(a)
-		m1=mergesort(l1)
-		m2=mergesort(l2)
-		return combinar(m1, m2)
-
-def quicksort(a):
-	if len(a)==0:
-		return []
-	else:
-		j=0
-		i=0
-		while i<len(a):
-			if a[0][0]>a[i][0]:
-				j+=1
-				a[j],a[i]=a[i],a[j]
-			i+=1
-		a[0],a[j]=a[j],a[0]
-		return quicksort(a[:j])+[a[j]]+quicksort(a[j+1:])
 
 
 
 
 if __name__ == '__main__':
 	archi = sys.argv[1]
-	print(distanciaMinima(listaDeDist(listaDePuntos(archi))))
-
 
