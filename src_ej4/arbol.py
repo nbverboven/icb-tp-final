@@ -14,7 +14,7 @@ class Arbol(object):
 				self._derecha = Arbol()
 		else:
 			if izquierda is not None or derecha is not None:
-				raise TypeError("arbol mal formado")
+				raise TypeError("Árbol mal formado")
 
 	def vacio(self):
 		return self._vacio
@@ -23,27 +23,27 @@ class Arbol(object):
 		if not self._vacio:
 			return self.r
 		else:
-			raise AttributeError
+			raise AttributeError("El árbol está vacío")
 
 	def izquierda(self):
 		if not self._vacio and not self._izquierda._vacio:
 			return self._izquierda
 		else:
-			raise AttributeError
+			raise AttributeError("El árbol no tiene rama izquierda")
 
 	def derecha(self):
 		if not self._vacio and not self._derecha._vacio:
 			return self._derecha
 		else:
-			raise AttributeError
+			raise AttributeError("El árbol no tiene rama derecha")
 
 	def __eq__(self, otro_arbol):
 		if self._vacio and otro_arbol.vacio():
 			return True
-		elif (self._vacio and not otro_arbol.vacio()) or (not self._vacio and otro_arbol.vacio()):
+		elif (self._vacio and not otro_arbol._vacio) or (not self._vacio and otro_arbol._vacio):
 			return False
 		else:
-			return self.r == otro_arbol.raiz() and self._izquierda.__eq__(otro_arbol.izquierda()) and self._derecha.__eq__(otro_arbol.derecha())
+			return self.r == otro_arbol.r and self._izquierda.__eq__(otro_arbol._izquierda) and self._derecha.__eq__(otro_arbol._derecha)
 
 	def find(self, a):
 		if self._vacio:
