@@ -3,7 +3,23 @@ from arbol import Arbol
 
 class TestConstructor(unittest.TestCase):
 	def test_cuando_arbol_mal_formado(self):
-		pass
+
+		with self.assertRaises(TypeError):
+			arbol = Arbol(None, Arbol(2), Arbol(3))
+
+
+class TestIgualdad(unittest.TestCase):
+	def test_dos_arboles_iguales_es_true(self):
+		arbol = Arbol(1, Arbol(2, Arbol(4), Arbol(5)), Arbol(3, Arbol(6), Arbol(7)))
+		otro_arbol = Arbol(1, Arbol(2, Arbol(4), Arbol(5)), Arbol(3, Arbol(6), Arbol(7)))
+
+		self.assertEqual(arbol, otro_arbol)
+
+	def test_dos_arboles_distintos_es_false(self):
+		arbol = Arbol(1, Arbol(2, Arbol(4), Arbol(5)), Arbol(3, Arbol(6), Arbol(7)))
+		otro_arbol = Arbol(1, Arbol(8, Arbol(9), Arbol(13)), Arbol(23, Arbol(65), Arbol(337)))
+
+		self.assertNotEqual(arbol, otro_arbol)
 
 
 class TestVacio(unittest.TestCase):
