@@ -40,6 +40,11 @@ class TestRaiz(unittest.TestCase):
 
 		self.assertEqual(arbol.raiz(), 2)
 
+	def test_no_hay_raiz_error(self):
+		arbol = Arbol()
+
+		self.assertRaises(AttributeError, arbol.raiz)
+
 
 class TestIzquierda(unittest.TestCase):
 	def test_cuando_rama_izquierda_vacia_error(self):
@@ -47,12 +52,22 @@ class TestIzquierda(unittest.TestCase):
 
 		self.assertRaises(AttributeError, arbol.izquierda)
 
+	def test_rama_izquierda_esperada(self):
+		arbol = Arbol(1, Arbol(2, Arbol(4), Arbol(5)), Arbol(3, Arbol(6), Arbol(7)))
+
+		self.assertEqual(arbol.izquierda(), Arbol(2, Arbol(4), Arbol(5)))
+
 
 class TestDerecha(unittest.TestCase):
 	def test_cuando_rama_derecha_vacia_error(self):
 		arbol = Arbol(1, Arbol(2), Arbol())
 
 		self.assertRaises(AttributeError, arbol.derecha)
+
+	def test_rama_derecha_esperada(self):
+		arbol = Arbol(1, Arbol(2, Arbol(4), Arbol(5)), Arbol(3, Arbol(6), Arbol(7)))
+
+		self.assertEqual(arbol.derecha(), Arbol(3, Arbol(6), Arbol(7)))
 
 
 class TestFind(unittest.TestCase):
