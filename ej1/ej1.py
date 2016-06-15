@@ -30,25 +30,46 @@ def listaDeDist(a):
 			l.append(tupla)
 			i += 1
 		return l + listaDeDist(a[1:])
-
-
-def minima(a):
-	if len(a) == 0: 
+ 
+ 
+def minimoposta(a):
+	if len(a)==0: 
 		return None
-	elif len(a) == 1:
+	elif len(a)==1:
 		return a[0]
-	else:	
-		mini = minima(a[1:])
-		#asd = mini[2]
-		if a[0][2] <= mini[2]:
-			return (a[0][0], a[0][1])
-		else:
-			return mini[0], mini[1]
-
-
+	else:
+		i=0
+		j=0
+		while i<len(a) and j<len(a):
+			if a[i][2]<a[j][2]:
+				j+=1
+			else:
+				i+=1
+		if i<len(a):
+			return a[i]
+		return a[j]
 
 def distanciaMinima(a):
-	return minima(listaDeDist(a))
+	l=listaDeDist(listaDePuntos(a))
+	return minimoposta(l)[0], minimoposta(l)[1]
+
+# def minima(a):
+# 	if len(a) == 0: 
+# 		return None
+# 	elif len(a) == 1:
+# 		return a[0]
+# 	else:	
+# 		mini = minima(a[1:])
+# 		#asd = mini[2]
+# 		if a[0][2] <= mini[2]:
+# 			return (a[0][0], a[0][1])
+# 		else:
+# 			return mini[0], mini[1]
+
+
+
+#def distanciaMinima(a):
+#	return minima(listaDeDist(a))
 	# if len(a)<=1:
 	# 	return None
 	# else:
@@ -62,6 +83,23 @@ def distanciaMinima(a):
 
 #div&conquer:
 
+
+def minimodivconquer(lista, algoritmo):
+	if algoritmo == "up":
+		return conquer(algos.upSort(lista))
+	elif algoritmo == "bubble":
+		return conquer(algos.bubbleSort(lista))
+	elif algoritmo == "merge":
+		return conquer(algos.mergeSort(lista))
+	elif algoritmo == "quick":
+		return conquer(algos.quickSort(lista))
+	else:
+		raise NameError
+
+
+
+
+
 def partir(a):
 	mitad = len(a)//2
 	return a[:mitad], a[mitad:]
@@ -73,9 +111,9 @@ def divide(a):
 #lista de puntos
 def minimodeparticion(a):
 	l1, l2=divide(a)
-	if minima(l1) < minima(l2):
-		return minima(l1)
-	return minima(l2)
+	if minimoposta(l1) [2] < minimoposta(l2) [2]:
+		return minimoposta(l1)
+	return minimoposta(l2)
 
 #lista de puntos
 def conquer(a):
@@ -83,20 +121,21 @@ def conquer(a):
 	x=((a[i][0] - a[i-1][0])/2)+a[i-1][0]
 	j=0
 	l=[]
+	mini= minimodeparticion(a)
 	while j<len(a):
-		if abs(a[j][0]-x)< minimodeparticion(a):
+		if abs(a[j][0]-x)< mini[2]:
 			l.append(a[j])
 		j+=1
-	if minimodeparticion(a)>=minima(listaDeDist(l)):
-		return distanciaMinima(l)
-	l1, l2=divide(a)
-	if minima(l1) < minima(l2):
-		return distanciaMinima(l1)
-	return distanciaMinima(l2)
+	if len(l)>0:
+		mi=minimoposta(listaDeDist(l))
+		if mini[2] >= mi[2]:
+			return mi[0], mi[1]
+	return mini[0],mini[1]
+	
 
 
 if __name__ == '__main__':
-	#archi = sys.argv[1]
+	archi = sys.argv[1]
 	lista_prueba = [(randint(0, 30), randint(0, 30)) for i in range(29)]
-	print(distanciaMinima(lista_prueba))
+	#print(distanciaMinima(lista_prueba))
 
