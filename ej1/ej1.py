@@ -1,6 +1,7 @@
 import sys
 from math import sqrt
 import algos
+from random import randint
 
 def listaDePuntos(archi):
 	f = open(archi,'r')
@@ -19,41 +20,45 @@ def distancia(punto1, punto2):
 	return sqrt( ( abs(punto1[0]-punto2[0]) )**2 + ( abs(punto1[1]-punto2[1]) )**2 )
 
 def listaDeDist(a):
-	if len(a) == 0:
+	if len(a) <= 1:
 		return []
 	else:	
 		l = []
 		i = 1
 		while i < len(a):
-			l.append(distancia(a[0], a[i]))
+			tupla = (a[0], a[i], distancia(a[0], a[i]))
+			l.append(tupla)
 			i += 1
 		return l + listaDeDist(a[1:])
 
 
 def minima(a):
-	if len(a)==0: return None
+	if len(a) == 0: 
+		return None
 	elif len(a) == 1:
 		return a[0]
 	else:	
 		mini = minima(a[1:])
-		if a[0] <= mini:
-			return a[0]
+		#asd = mini[2]
+		if a[0][2] <= mini[2]:
+			return (a[0][0], a[0][1])
 		else:
-			return mini
+			return mini[0], mini[1]
 
 
 
 def distanciaMinima(a):
-	if len(a)<=1:
-		return None
-	else:
-		i=1
-		while i<len(a) and distancia(a[0], a[i])!= minima(listaDeDist(a)):
-			i+=1
-		if i<len(a):
-			return a[0], a[i]
-		else:
-			return distanciaMinima(a[1:])
+	return minima(listaDeDist(a))
+	# if len(a)<=1:
+	# 	return None
+	# else:
+	# 	i=1
+	# 	while i<len(a) and distancia(a[0], a[i])!= minima(listaDeDist(a)):
+	# 		i+=1
+	# 	if i<len(a):
+	# 		return a[0], a[i]
+	# 	else:
+	# 		return distanciaMinima(a[1:])
 
 #div&conquer:
 
@@ -91,5 +96,7 @@ def conquer(a):
 
 
 if __name__ == '__main__':
-	archi = sys.argv[1]
+	#archi = sys.argv[1]
+	lista_prueba = [(randint(0, 30), randint(0, 30)) for i in range(29)]
+	print(distanciaMinima(lista_prueba))
 
