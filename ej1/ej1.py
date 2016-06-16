@@ -5,6 +5,7 @@ from random import randint
 import random
 import time
 
+
 def listaDePuntos(archi):
 	f = open(archi,'r')
 	lista = []
@@ -35,71 +36,57 @@ def listaDeDist(a):
  
  
 def minimoposta(a):
-	if len(a)==0: 
+	if len(a) == 0: 
 		return None
-	elif len(a)==1:
+	elif len(a) == 1:
 		return a[0]
 	else:
-		i=0
-		j=0
-		while i<len(a) and j<len(a):
-			if a[i][2]<a[j][2]:
-				j+=1
+		i = 0
+		j = 0
+		while i < len(a) and j < len(a):
+			if a[i][2] < a[j][2]:
+				j += 1
 			else:
-				i+=1
-		if i<len(a):
+				i += 1
+		if i < len(a):
 			return a[i]
 		return a[j]
+
+
+# Otra implementación de minimoposta.
+def minimoPostaaaaa(a):
+	if len(a) < 0:
+		raise ValueError("La lista debe tener por lo menos un elemento")
+	else:
+		i = 1
+		par_a_min_dist = a[0]
+		while i < len(a)-1:
+			if par_a_min_dist[2] > a[i][2]:
+				par_a_min_dist = a[i]
+			i += 1
+		return par_a_min_dist[0], par_a_min_dist[1]
+
+
 
 def distanciaMinima(a):
 	l=listaDeDist(a)
 	return minimoposta(l)[0], minimoposta(l)[1]
 
-# def minima(a):
-# 	if len(a) == 0: 
-# 		return None
-# 	elif len(a) == 1:
-# 		return a[0]
-# 	else:	
-# 		mini = minima(a[1:])
-# 		#asd = mini[2]
-# 		if a[0][2] <= mini[2]:
-# 			return (a[0][0], a[0][1])
-# 		else:
-# 			return mini[0], mini[1]
-
-
-
-#def distanciaMinima(a):
-#	return minima(listaDeDist(a))
-	# if len(a)<=1:
-	# 	return None
-	# else:
-	# 	i=1
-	# 	while i<len(a) and distancia(a[0], a[i])!= minima(listaDeDist(a)):
-	# 		i+=1
-	# 	if i<len(a):
-	# 		return a[0], a[i]
-	# 	else:
-	# 		return distanciaMinima(a[1:])
 
 #div&conquer:
 
-
 def minimodivconquer(lista, algoritmo):
-	if algoritmo == "up":
+	string = str(algoritmo)
+	if string == "up":
 		return conquer(algos.upSort(lista))
-	elif algoritmo == "bubble":
+	elif string == "bubble":
 		return conquer(algos.bubbleSort(lista))
-	elif algoritmo == "merge":
+	elif string == "merge":
 		return conquer(algos.mergeSort(lista))
-	elif algoritmo == "quick":
+	elif string == "quick":
 		return conquer(algos.quickSort(lista))
 	else:
-		raise NameError
-
-
-
+		raise NameError("Ingrese un algoritmo válido")
 
 
 def partir(a):
@@ -110,6 +97,7 @@ def divide(a):
 	l1=listaDeDist(partir(a)[0])
 	l2=listaDeDist(partir(a)[1])
 	return l1, l2
+
 #lista de puntos
 def minimodeparticion(a):
 	l1, l2=divide(a)

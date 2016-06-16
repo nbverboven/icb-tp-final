@@ -5,7 +5,7 @@ from random import randint
 from random import random
 
 # Ordena la lista recibida según el algoritmo descripto por el parámetro
-#homónomo.
+#homónimo.
 def listaOrdenadaEnX(lista, algoritmo):
 	if algoritmo == "up":
 		lista = algos.upSort(lista)
