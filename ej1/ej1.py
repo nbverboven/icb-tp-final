@@ -2,6 +2,8 @@ import sys
 from math import sqrt
 import algos
 from random import randint
+import random
+import time
 
 def listaDePuntos(archi):
 	f = open(archi,'r')
@@ -50,7 +52,7 @@ def minimoposta(a):
 		return a[j]
 
 def distanciaMinima(a):
-	l=listaDeDist(listaDePuntos(a))
+	l=listaDeDist(a)
 	return minimoposta(l)[0], minimoposta(l)[1]
 
 # def minima(a):
@@ -132,10 +134,29 @@ def conquer(a):
 			return mi[0], mi[1]
 	return mini[0],mini[1]
 	
-
+print(time.clock())
 
 if __name__ == '__main__':
 	archi = sys.argv[1]
-	lista_prueba = [(randint(0, 30), randint(0, 30)) for i in range(29)]
-	#print(distanciaMinima(lista_prueba))
+	# lista_prueba = [(randint(0, 30), randint(0, 30)) for i in range(29)]
+	# print(distanciaMinima(lista_prueba))
+	# lista_prueba1 = [(randint(50, 70), randint(5, 70)) for i in range(69)]
+	# print(distanciaMinima(lista_prueba1))
 
+	l=[]
+	for i in range(10):
+	 	for j in range(2):
+	 		l.append((random.random()+i,random.random()+j))
+	print(minimodivconquer(l, 'up'))
+	print(time.clock())
+
+	l=[]
+	for i in range(100):
+		for j in range(10):
+			l.append((random.random()+i,random.random()+j))
+	print(distanciaMinima(l))
+	print(time.clock())
+
+	with open(sys.argv[2], 'w') as salida: 
+	for i in lista:
+		salida.write(','.join(linea)+'\n')	
