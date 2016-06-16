@@ -151,12 +151,33 @@ if __name__ == '__main__':
 	print(time.clock())
 
 	l=[]
-	for i in range(100):
+	for i in range(10):
 		for j in range(10):
 			l.append((random.random()+i,random.random()+j))
-	print(distanciaMinima(l))
+	distanciaMinima(l)
 	print(time.clock())
 
-	with open(sys.argv[2], 'w') as salida: 
-	for i in lista:
-		salida.write(','.join(linea)+'\n')	
+	
+def tuplalenytime(f,r):
+	l=[]
+	for i in range(f):
+	 	for j in range(r):
+	 		l.append((random.random()+i,random.random()+j))
+	minimodivconquer(l, 'up')
+	return str(len(l)), str(time.clock())
+
+def listadetuplas(a):
+	i=2
+	j=2
+	l=[]
+	while i<a:
+		l.append(tuplalenytime(i,j))
+		i+=10
+		j+=1
+	return l
+
+
+
+with open(sys.argv[2], 'w') as salida: 
+	for i in listadetuplas(100):
+		salida.write(','.join(i)+'\n')
