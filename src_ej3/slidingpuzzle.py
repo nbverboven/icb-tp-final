@@ -47,7 +47,7 @@ class Rompecabezas(object):
 			numero_fila += 1
 
 		if len(self._rompecabezas) != self._alto or len(self._rompecabezas[0]) != self._ancho:
-			raise IOError("Formato incorrect de archio")
+			raise IOError("Formato incorrecto de archivo")
 		archivo.close()
 
 	def __str__(self):
@@ -107,7 +107,6 @@ class Rompecabezas(object):
 
 
 	def resolver(self, n):
-		print(n)
 		pos = self._espacio_vacio
 		if self.resuelto() and n >= 0:
 			return True
@@ -162,5 +161,5 @@ if __name__ == '__main__':
 	print(x._rompecabezas)
 	print(x._unirListas(x._rompecabezas))
 	print(x.resuelto())
-	x.resolver(5)
+	x.resolver(50)
 	print(x._rompecabezas)
