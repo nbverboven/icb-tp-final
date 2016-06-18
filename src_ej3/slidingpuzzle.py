@@ -18,19 +18,21 @@ class Rompecabezas(object):
 		self._alto = height
 		self._espacio_vacio = (0, 0) # (alto, ancho) == (filas, columnas)
 
+
 	def update(self):
 		if self.parent is not None:
 			self.parent.redraw()
 
-	# TODO: Ver cómo levantar una excepción si el 
-	#formato del archivo no es correcto.
+
 	def cargar(self, fn):
 		self._rompecabezas = []
 		try:
 			archivo = open(fn, 'r')
 		except IOError:
 			raise
+
 		numero_fila = 0
+
 		for fila in archivo.readlines():
 			fila = fila.rstrip('\n')
 			fila = fila.split('\t')
@@ -40,8 +42,12 @@ class Rompecabezas(object):
 					self._espacio_vacio = (numero_fila, columna)
 				else:
 					fila[columna] = int(fila[columna])
+
 			self._rompecabezas.append(fila)
 			numero_fila += 1
+
+		if len(self._rompecabezas) != self._alto or len(self._rompecabezas[0]) != self._ancho:
+			raise IOError("Formato incorrect de archio")
 		archivo.close()
 
 	def __str__(self):
@@ -59,29 +65,10 @@ class Rompecabezas(object):
 	def alto(self):
 		return self._alto
 
-	# TODO: Así como está hace n²+n operaciones.
-	# Ver si se puede hacer más eficiente.
-	def resuelto(self):
-		# lista_aux = []
-		# flag = True
-		# for fila in self._rompecabezas:
-		# 	for columna in fila:
-		# 		if columna == ' ':
-		# 			lista_aux.append(self._ancho*self._alto)
-		# 		else:
-		# 			lista_aux.append(int(columna))
-		# i = 0
-		# while i < len(lista_aux)-1 and flag:
-		# 	if lista_aux[i] > lista_aux[i+1]:
-		# 		flag = False 
-		# 	i+= 1
-		# return flag
 
+	def resuelto(self):
 		lista_aux = self._unirListas(self._rompecabezas)
 		return sorted(lista_aux) == lista_aux
-
-
-
 
 	# Listo
 	def mover(self, direccion):
@@ -111,42 +98,61 @@ class Rompecabezas(object):
 
 		return intercambio_realizado		
 
-	# Listo
+
 	def guardar(self, fn):
 		archivo = open(fn, 'w')
 		for fila in range(len(self._rompecabezas)):
 			archivo.write('	'.join(self._rompecabezas[fila]) + '\n')
 		archivo.close()
 
+
 	def resolver(self, n):
+		print(n)
+		pos = self._espacio_vacio
 		if self.resuelto() and n >= 0:
 			return True
+
+		elif n < 0:
+			return False
+
 		else:
-			if self.mover(UP):
-				self.resolver(n-1)
+			if pos[0]-1 >= 0:
+				self.mover(UP)
+				if self.resolver(n-1):
+					return True
+				self.mover(DOWN)
 
-			elif self.mover(LEFT):
-				self.resolver(n-1)
+			if pos[1]-1 >= 0:
+				self.mover(LEFT)
+				if self.resolver(n-1):
+					return True
+				self.mover(RIGHT)
 
-			elif self.mover(RIGHT):
-				self.resolver(n-1)
+			if pos[0]+1 < self._alto:
+				self.mover(DOWN)
+				if self.resolver(n-1):
+					return True
+				self.mover(UP)
 
-			elif self.mover(DOWN):
-				self.resolver(n-1)
+			if pos[1]+1 < self._ancho:
+				self.mover(RIGHT)
+				if self.resolver(n-1):
+					return True
+				self.mover(LEFT)
 
-			else:
-				return False
+			return False
 
-
+			
 	###############################
 	# Métodos privados
 	###############################
 
 	def _unirListas(self, lista_de_listas):
-		if len(lista_de_listas) == 0:
-			return []
-		else:
-			return lista_de_listas[0] + self._unirListas(lista_de_listas[1:])
+		lista_aux = []
+		for fila in lista_de_listas:
+			lista_aux.extend(fila)
+		return lista_aux
+
 
 
 if __name__ == '__main__':
@@ -156,5 +162,5 @@ if __name__ == '__main__':
 	print(x._rompecabezas)
 	print(x._unirListas(x._rompecabezas))
 	print(x.resuelto())
-	# x.resolver(50)
-	# print(x._rompecabezas)
+	x.resolver(5)
+	print(x._rompecabezas)
