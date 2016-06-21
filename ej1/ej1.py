@@ -158,6 +158,14 @@ if __name__ == '__main__':
 	print(time.clock())
 
 	
+def tuplalenytimedm(f,r):
+	l=[]
+	for i in range(f):
+	 	for j in range(r):
+	 		l.append((random.random()+i,random.random()+j))
+	distanciaMinima(l)
+	return str(len(l)), str(time.clock())
+
 def tuplalenytime(f,r):
 	l=[]
 	for i in range(f):
@@ -171,13 +179,13 @@ def listadetuplas(a):
 	j=2
 	l=[]
 	while i<a:
-		l.append(tuplalenytime(i,j))
-		i+=10
+		l.append(tuplalenytimedm(i,j))
+		i+=5
 		j+=1
 	return l
 
 
 
 with open(sys.argv[2], 'w') as salida: 
-	for i in listadetuplas(100):
+	for i in listadetuplas(50):
 		salida.write(','.join(i)+'\n')
