@@ -52,20 +52,27 @@ class Rompecabezas(object):
 
 
 	def __str__(self):
+		lista_aux = []
 		for fila in self._rompecabezas:
-			print(fila)
-			self._imprimirLista(fila)
-		print('\n')
+			fila_aux = []
+			for elem in fila:
+				if elem == self._ancho * self._alto:
+					fila_aux.append(' ')
+				else:
+					fila_aux.append(str(elem))
+			lista_aux.append(fila_aux)
 
-	# Listo
+		return '\t'.join((elem for elem in fila) for fila in lista_aux)		
+
+
 	def get(self, i, j):
 		return self._rompecabezas[i][j]
 
-	# Listo
+
 	def ancho(self):
 		return self._ancho
 
-	# Listo
+
 	def alto(self):
 		return self._alto
 
@@ -74,7 +81,7 @@ class Rompecabezas(object):
 		lista_aux = self._unirListas(self._rompecabezas)
 		return sorted(lista_aux) == lista_aux
 
-	# Listo
+	
 	def mover(self, direccion):
 		intercambio_realizado = False
 		pos = self._espacio_vacio
@@ -119,27 +126,35 @@ class Rompecabezas(object):
 		else:
 			if pos[0]-1 >= 0:
 				self.mover(UP)
+				self.update()
 				if self.resolver(n-1):
 					return True
 				self.mover(DOWN)
+				self.update()
 
 			if pos[1]-1 >= 0:
 				self.mover(LEFT)
+				self.update()
 				if self.resolver(n-1):
 					return True
 				self.mover(RIGHT)
+				self.update()
 
 			if pos[0]+1 < self._alto:
 				self.mover(DOWN)
+				self.update()
 				if self.resolver(n-1):
 					return True
 				self.mover(UP)
+				self.update()
 
 			if pos[1]+1 < self._ancho:
 				self.mover(RIGHT)
+				self.update()
 				if self.resolver(n-1):
 					return True
 				self.mover(LEFT)
+				self.update()
 
 			return False
 
@@ -154,25 +169,31 @@ class Rompecabezas(object):
 			lista_aux.extend(fila)
 		return lista_aux
 
+
+	def _imprimir(self, lista_de_listas):
+		return str(map(self._imprimirLista, lista_de_listas))
+
+
 	def _imprimirLista(self, lista):
-		if len(lista) == 0:
-			print(' ')
+		if not lista:
+			return ' ' 
 		else:
 			if lista[0] == self._ancho * self._alto:
-				print('	' + '	' + self._imprimirLista(lista[1:]))
+				return ' ' + self._imprimirLista(lista[1:])
 			else:
-				print(str(lista[0]) + '	' + self._imprimirLista(lista[1:]))
+				return str(lista[0]) + self._imprimirLista(lista[1:])
 
 
 
 if __name__ == '__main__':
-	# acá pueden completar con algunas pruebas para usar con el intérprete interactivo
+
 	x = Rompecabezas(6, 6)
 	x.cargar('puzzle1.txt')
 	print(x._rompecabezas)
-	#print(str(x))
+	print(str(x))
 	x.guardar('pruebita.txt')
 	# print(x._unirListas(x._rompecabezas))
 	# print(x.resuelto())
 	# x.resolver(10)
 	# print(x._rompecabezas)
+
