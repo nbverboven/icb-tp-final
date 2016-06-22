@@ -4,6 +4,7 @@ import algos
 from random import randint
 import random
 import time
+# import tiempodeup
 
 def listaDePuntos(archi):
 	f = open(archi,'r')
@@ -55,39 +56,14 @@ def distanciaMinima(a):
 	l=listaDeDist(a)
 	return minimoposta(l)[0], minimoposta(l)[1]
 
-# def minima(a):
-# 	if len(a) == 0: 
-# 		return None
-# 	elif len(a) == 1:
-# 		return a[0]
-# 	else:	
-# 		mini = minima(a[1:])
-# 		#asd = mini[2]
-# 		if a[0][2] <= mini[2]:
-# 			return (a[0][0], a[0][1])
-# 		else:
-# 			return mini[0], mini[1]
-
-
-
-#def distanciaMinima(a):
-#	return minima(listaDeDist(a))
-	# if len(a)<=1:
-	# 	return None
-	# else:
-	# 	i=1
-	# 	while i<len(a) and distancia(a[0], a[i])!= minima(listaDeDist(a)):
-	# 		i+=1
-	# 	if i<len(a):
-	# 		return a[0], a[i]
-	# 	else:
-	# 		return distanciaMinima(a[1:])
 
 #div&conquer:
 
 
 def minimodivconquer(lista, algoritmo):
-	if algoritmo == "up":
+	if len(lista)<=4:
+		return distanciaMinima(lista)
+	elif algoritmo == "up":
 		return conquer(algos.upSort(lista))
 	elif algoritmo == "bubble":
 		return conquer(algos.bubbleSort(lista))
@@ -138,54 +114,41 @@ print(time.clock())
 
 if __name__ == '__main__':
 	archi = sys.argv[1]
-	# lista_prueba = [(randint(0, 30), randint(0, 30)) for i in range(29)]
-	# print(distanciaMinima(lista_prueba))
-	# lista_prueba1 = [(randint(50, 70), randint(5, 70)) for i in range(69)]
-	# print(distanciaMinima(lista_prueba1))
 
-	l=[]
-	for i in range(10):
-	 	for j in range(2):
-	 		l.append((random.random()+i,random.random()+j))
-	print(minimodivconquer(l, 'up'))
-	print(time.clock())
 
-	l=[]
-	for i in range(10):
-		for j in range(10):
-			l.append((random.random()+i,random.random()+j))
-	distanciaMinima(l)
-	print(time.clock())
-
-	
-def tuplalenytimedm(f,r):
-	l=[]
-	for i in range(f):
-	 	for j in range(r):
-	 		l.append((random.random()+i,random.random()+j))
-	distanciaMinima(l)
-	return str(len(l)), str(time.clock())
-
-def tuplalenytime(f,r):
-	l=[]
-	for i in range(f):
-	 	for j in range(r):
-	 		l.append((random.random()+i,random.random()+j))
-	minimodivconquer(l, 'up')
-	return str(len(l)), str(time.clock())
-
-def listadetuplas(a):
-	i=2
-	j=2
-	l=[]
-	while i<a:
-		l.append(tuplalenytimedm(i,j))
-		i+=5
-		j+=1
+def generar_puntos(n):
+	l = []
+	for i in range(n):
+		l.append((random.random()*10,random.random()*10))
 	return l
 
+def generar_lista_tuplas(n):
+	ln=list(range(10,n,10))
+	ls=[]
+	i=0
+	while i<len(ln):
+		x=generar_puntos(ln[i])
+		ls.append(generar_tupla(x))
+		i+=1
+	return ls
+
+def generar_tupla(l):
+	x=time.clock()
+	distanciaMinima(l)
+	y=time.clock()
+	minimodivconquer(l, 'up')
+	z=time.clock()
+	minimodivconquer(l, 'bubble')
+	u=time.clock()
+	minimodivconquer(l, 'merge')
+	g=time.clock()
+	minimodivconquer(l, 'quick')
+	h=time.clock()
+	return str(len(l)), str(y-x), str(z-y), str(u-z), str(g-u), str(h-g)
 
 
 with open(sys.argv[2], 'w') as salida: 
-	for i in listadetuplas(50):
+	for i in generar_lista_tuplas(700):
 		salida.write(','.join(i)+'\n')
+
+

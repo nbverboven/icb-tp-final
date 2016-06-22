@@ -81,6 +81,11 @@ class TestFind(unittest.TestCase):
 
 		self.assertTrue(arbol.find(56))
 
+	def test_cuando_el_elemento_no_esta_es_false(self):
+		arbol = Arbol(2, Arbol(43, Arbol(3), Arbol(56)), Arbol(4))		
+		
+		self.assertFalse(arbol.find(1000))
+
 
 class TestEspejo(unittest.TestCase):
 	def test_espejo_de_arbol_vacio_es_vacio(self):
@@ -93,7 +98,6 @@ class TestEspejo(unittest.TestCase):
 		otro_arbol = arbol.espejo()
 
 		self.assertNotEqual(arbol, otro_arbol)
-
 
 
 class TestPreorder(unittest.TestCase):
