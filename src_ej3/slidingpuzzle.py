@@ -50,8 +50,12 @@ class Rompecabezas(object):
 			raise IOError("Formato incorrecto de archivo")
 		archivo.close()
 
+
 	def __str__(self):
-		pass
+		for fila in self._rompecabezas:
+			print(fila)
+			self._imprimirLista(fila)
+		print('\n')
 
 	# Listo
 	def get(self, i, j):
@@ -100,11 +104,9 @@ class Rompecabezas(object):
 
 
 	def guardar(self, fn):
-		archivo = open(fn, 'w')
-		for fila in range(len(self._rompecabezas)):
-			archivo.write('	'.join(self._rompecabezas[fila]) + '\n')
-		archivo.close()
-
+		with open(fn, 'w') as archivo:
+			archivo.write(str(self))
+		
 
 	def resolver(self, n):
 		pos = self._espacio_vacio
@@ -152,14 +154,25 @@ class Rompecabezas(object):
 			lista_aux.extend(fila)
 		return lista_aux
 
+	def _imprimirLista(self, lista):
+		if len(lista) == 0:
+			print(' ')
+		else:
+			if lista[0] == self._ancho * self._alto:
+				print('	' + '	' + self._imprimirLista(lista[1:]))
+			else:
+				print(str(lista[0]) + '	' + self._imprimirLista(lista[1:]))
+
 
 
 if __name__ == '__main__':
 	# acá pueden completar con algunas pruebas para usar con el intérprete interactivo
-	x = Rompecabezas(4, 4)
-	x.cargar('puzzle2.txt')
+	x = Rompecabezas(6, 6)
+	x.cargar('puzzle1.txt')
 	print(x._rompecabezas)
-	print(x._unirListas(x._rompecabezas))
-	print(x.resuelto())
-	x.resolver(50)
-	print(x._rompecabezas)
+	#print(str(x))
+	x.guardar('pruebita.txt')
+	# print(x._unirListas(x._rompecabezas))
+	# print(x.resuelto())
+	# x.resolver(10)
+	# print(x._rompecabezas)
