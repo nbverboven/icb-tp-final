@@ -11,15 +11,7 @@ def generar_puntos(n):
 		l.append((random.random()*10,random.random()*10))
 	return l
 
-def generar_lista_tuplas(n):
-	ln=list(range(10,n,10))
-	ls=[]
-	i=0
-	while i<len(ln):
-		x=generar_puntos(ln[i])
-		ls.append(generar_tupla(x))
-		i+=1
-	return ls
+#genera tuplas del largo de la lista l y tiempo de ejecucion de los distintos programas:
 
 def generar_tupla(l):
 	x=time.clock()
@@ -34,6 +26,16 @@ def generar_tupla(l):
 	ej1.minimodivconquer(l, 'quick')
 	h=time.clock()
 	return str(len(l)), str(y-x), str(z-y), str(u-z), str(g-u), str(h-g)
+
+def generar_lista_tuplas(n):
+	ln=list(range(10,n,10))
+	ls=[]
+	i=0
+	while i<len(ln):
+		x=generar_puntos(ln[i])
+		ls.append(generar_tupla(x))
+		i+=1
+	return ls
 
 
 with open(sys.argv[1], 'w') as salida: 
