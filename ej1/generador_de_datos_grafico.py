@@ -1,6 +1,6 @@
 import sys
 import random
-import ej1
+import Fuerza_Bruta_y_DivideConquer
 import time
 
 
@@ -15,15 +15,15 @@ def generar_puntos(n):
 
 def generar_tupla(l):
 	x=time.clock()
-	ej1.distanciaMinima(l)
+	Fuerza_Bruta_y_DivideConquer.distanciaMinima(l)
 	y=time.clock()
-	ej1.minimodivconquer(l, 'up')
+	Fuerza_Bruta_y_DivideConquer.minimodivconquer(l, 'up')
 	z=time.clock()
-	ej1.minimodivconquer(l, 'bubble')
+	Fuerza_Bruta_y_DivideConquer.minimodivconquer(l, 'bubble')
 	u=time.clock()
-	ej1.minimodivconquer(l, 'merge')
+	Fuerza_Bruta_y_DivideConquer.minimodivconquer(l, 'merge')
 	g=time.clock()
-	ej1.minimodivconquer(l, 'quick')
+	Fuerza_Bruta_y_DivideConquer.minimodivconquer(l, 'quick')
 	h=time.clock()
 	return str(len(l)), str(y-x), str(z-y), str(u-z), str(g-u), str(h-g)
 
