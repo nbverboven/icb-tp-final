@@ -52,17 +52,25 @@ class Rompecabezas(object):
 
 
 	def __str__(self):
+		# Primero convierto todos los elementos de _rompecabezas a string.
 		lista_aux = []
 		for fila in self._rompecabezas:
 			fila_aux = []
+
 			for elem in fila:
 				if elem == self._ancho * self._alto:
 					fila_aux.append(' ')
+					fila_aux.append('\t')
 				else:
 					fila_aux.append(str(elem))
+					fila_aux.append('\t')
+
+			fila_aux = fila_aux[:-1]
+			fila_aux.append('\n')
 			lista_aux.append(fila_aux)
 
-		return '\t'.join((elem for elem in fila) for fila in lista_aux)		
+		lista_aux = self._unirListas(lista_aux)
+		return ''.join(lista_aux)		
 
 
 	def get(self, i, j):
@@ -88,6 +96,7 @@ class Rompecabezas(object):
 		# Verifico que sea posible mover el espacio vacío en la dirección especificada previo a realizar
 		# el intercambio.
 		if direccion == 0 and pos[0]-1 >= 0:
+			# Intercambio el espacio vacío con la posición de arriba.
 			self._rompecabezas[pos[0]][pos[1]], self._rompecabezas[pos[0]-1][pos[1]] = self._rompecabezas[pos[0]-1][pos[1]], self._rompecabezas[pos[0]][pos[1]]
 			self._espacio_vacio = (pos[0]-1, pos[1])
 			intercambio_realizado = True
@@ -163,26 +172,12 @@ class Rompecabezas(object):
 	# Métodos privados
 	###############################
 
+	# Devuelve el resultado de concatenar los elementos de lista_de_listas. 
 	def _unirListas(self, lista_de_listas):
 		lista_aux = []
 		for fila in lista_de_listas:
 			lista_aux.extend(fila)
 		return lista_aux
-
-
-	def _imprimir(self, lista_de_listas):
-		return str(map(self._imprimirLista, lista_de_listas))
-
-
-	def _imprimirLista(self, lista):
-		if not lista:
-			return ' ' 
-		else:
-			if lista[0] == self._ancho * self._alto:
-				return ' ' + self._imprimirLista(lista[1:])
-			else:
-				return str(lista[0]) + self._imprimirLista(lista[1:])
-
 
 
 if __name__ == '__main__':
