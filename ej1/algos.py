@@ -71,16 +71,24 @@ def combinar(l1, l2):
 
 
 #quick:
-def quickSort(a):
-	if len(a) == 0:
-		return []
-	else:
-		j = 0
-		i = 0
-		while i < len(a):
-			if a[0][0] > a[i][0]:
-				j += 1
-				a[j], a[i] = a[i], a[j]
+def partition(array, begin, end):
+	pivot = randint(begin, end)
+	array[pivot], array[end] = array[end], array[pivot]
+	i = begin -1
+	for j in range(begin, end):
+		if array[j] <= array[end]:
 			i += 1
-		a[0], a[j] = a[j], a[0]
-		return quickSort(a[:j]) + [a[j]] + quickSort(a[j+1:])
+			array[i], array[j] = array[j], array[i]
+	array[i+1], array[end] = array[end], array[i+1]
+	return i + 1
+
+def quickSort(array, begin=0, end=None):
+	if end is None:
+		end = len(array) - 1
+	def _quickSort(array, begin, end):
+		if begin >= end:
+			return
+		pivot = partition(array, begin, end)
+		_quickSort(array, begin, pivot-1)
+		_quickSort(array, pivot+1, end)
+	return _quickSort(array, begin, end)
