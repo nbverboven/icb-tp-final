@@ -1,3 +1,4 @@
+from random import randint
 
 #up:
 def upSort(a):
@@ -91,4 +92,5 @@ def quickSort(array, begin=0, end=None):
 		pivot = partition(array, begin, end)
 		_quickSort(array, begin, pivot-1)
 		_quickSort(array, pivot+1, end)
-	return _quickSort(array, begin, end)
+	_quickSort(array, begin, end)
+	return array
