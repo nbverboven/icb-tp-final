@@ -35,7 +35,7 @@ def usage():
 o bien:
     {0} archivotxt imagen [velocidad]
 
-Si es especifica --generate, el programa generará una nueva instancia de rompecabezas de manera aleatoria. En otro caso, resolverá el rompecabezas indicado por archivotxt.
+Si se especifica --generate, el programa generará una nueva instancia de rompecabezas de manera aleatoria. En otro caso, resolverá el rompecabezas indicado por archivotxt.
 
 * imagen: indica el nombre de una imagen a rearmar en el rompecabezas.
 * velocidad: opcional, solo para modo resolución, indica cuántos pasos se realizan por segundo (default: 500).
