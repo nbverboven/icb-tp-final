@@ -1,6 +1,8 @@
 from random import randint
 
-#up:
+##
+# Upsort
+##
 def upSort(a):
 	actual = len(a) - 1
 	i = 0
@@ -20,7 +22,9 @@ def maxPos(lista, desde, hasta):
 	return posicion_del_maximo
 
 
-#bubble:
+##
+# Bubble Sort
+##
 def bubbleSort(lista):
 	intercambiado = True
 	n = len(lista)-1
@@ -34,7 +38,9 @@ def bubbleSort(lista):
 	return lista
 
 
-#merge:
+##
+# Merge Sort
+##
 def mergeSort(a):
 	if len(a) <= 1: 
 		return a
@@ -43,18 +49,16 @@ def mergeSort(a):
 			a[0], a[1] = a[1], a[0]
 		return a
 	else:
-		l1, l2 = partir(a)
+		l1, l2 = divide(a)
 		m1 = mergeSort(l1)
 		m2 = mergeSort(l2)
-		return combinar(m1, m2)
+		return combine(m1, m2)
 
-def partir(a):
+def divide(a):
 	mitad = len(a)//2
 	return a[:mitad], a[mitad:]
 
-
-#combinar recibe listas ya ordenadas
-def combinar(l1, l2):
+def combine(l1, l2):
 	l = []
 	i = 0
 	j = 0
@@ -71,7 +75,9 @@ def combinar(l1, l2):
 		return l + l2[j:]
 
 
-#quick:
+##
+# Quicksort
+##
 def partition(array, begin, end):
 	pivot = randint(begin, end)
 	array[pivot], array[end] = array[end], array[pivot]
