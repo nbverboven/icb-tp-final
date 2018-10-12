@@ -13,10 +13,10 @@ class Rompecabezas(object):
 	def __init__(self, width, height, parent=None):
 		self.parent = parent
 
-		self._rompecabezas = []
 		self._ancho = width
 		self._alto = height
-		self._espacio_vacio = (0, 0) # (alto, ancho) == (filas, columnas)
+		self._rompecabezas = [[i+j*self._alto for i in range(1, self._ancho+1)] for j in range(0, self._alto)]
+		self._espacio_vacio = (self._alto-1, self._ancho-1) # (alto, ancho) == (filas, columnas)
 
 
 	def update(self):
@@ -183,7 +183,7 @@ class Rompecabezas(object):
 if __name__ == '__main__':
 
 	x = Rompecabezas(6, 6)
-	x.cargar('puzzle1.txt')
+	#x.cargar('puzzle1.txt')
 	print(x._rompecabezas)
 	print(str(x))
 	x.guardar('pruebita.txt')
