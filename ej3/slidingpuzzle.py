@@ -15,6 +15,8 @@ class Rompecabezas(object):
 
 		self._ancho = width
 		self._alto = height
+		# Genero una matriz de _ancho*_alto con enteros ordenados de izquierda a 
+		# derecha y de arriba hacia abajo
 		self._rompecabezas = [[i+j*self._alto for i in range(1, self._ancho+1)] for j in range(0, self._alto)]
 		self._espacio_vacio = (self._alto-1, self._ancho-1) # (alto, ancho) == (filas, columnas)
 
