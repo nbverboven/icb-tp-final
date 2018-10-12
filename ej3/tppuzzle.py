@@ -42,6 +42,8 @@ Si se especifica --generate, el programa generará una nueva instancia de rompec
 * ancho: solo para --generate indica el ancho en bloques del rompecabezas.
 * alto: solo para --generate, indica el alto en bloques del rompecabezas.
 * pasos: solo para --generate, indica la cantidad de pasos aleatorios utilizados en la generación del nuevo rompecabezas.
+
+No funciona para valores de ancho y alto menores que 4.
 """.format(sys.argv[0]))
 
 def runLoop():

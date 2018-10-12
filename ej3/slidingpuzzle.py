@@ -12,7 +12,6 @@ class Rompecabezas(object):
 
 	def __init__(self, width, height, parent=None):
 		self.parent = parent
-
 		self._ancho = width
 		self._alto = height
 		# Genero una matriz de _ancho*_alto con enteros ordenados de izquierda a 
@@ -33,23 +32,32 @@ class Rompecabezas(object):
 		except IOError:
 			raise
 
-		numero_fila = 0
-
+		fila_actual = 0
+		largo_fila_anterior = 0
+		# Proceso las lineas del archivo fn
 		for fila in archivo.readlines():
 			fila = fila.rstrip('\n')
 			fila = fila.split('\t')
+			if fila_actual > 0 and len(fila) != largo_fila_anterior:
+				raise IOError("Todas las filas deben tener la misma cantidad de elementos")
+
 			for columna in range(len(fila)):
+				# Si encuentro el espacio vacío, guardo su posición
 				if fila[columna] == ' ':
 					fila[columna] = self._ancho * self._alto
-					self._espacio_vacio = (numero_fila, columna)
+					self._espacio_vacio = (fila_actual, columna)
 				else:
 					fila[columna] = int(fila[columna])
 
 			self._rompecabezas.append(fila)
-			numero_fila += 1
+			largo_fila_anterior = len(fila)
+			fila_actual += 1
 
-		if len(self._rompecabezas) != self._alto or len(self._rompecabezas[0]) != self._ancho:
-			raise IOError("Formato incorrecto de archivo")
+		self._alto = len(self._rompecabezas)
+		self._ancho = len(self._rompecabezas[0]) if self._alto != 0 else 0
+		if self._alto == 0:
+			raise IOError("El archivo debe contener al menos un elemento")
+
 		archivo.close()
 
 
